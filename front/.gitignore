@@ -1,0 +1,13 @@
+# Dependency and build directories
+node_modules/
+.webpack/
+out/
+
+# Logs and diagnostic reports (https://nodejs.org/api/report.html)
+logs
+*.log
+*-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Other
+.DS_Store

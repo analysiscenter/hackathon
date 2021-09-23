@@ -1,0 +1,94 @@
+#app {
+  font-family: Roboto;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+}
+
+#TaskList {
+  background-color: #6699cc;
+  margin: 0;
+  display: block;
+}
+
+#TaskList #Prompt {
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+  font-weight: 100;
+  color: #cceeff;
+}
+
+#TaskList .Task {
+  text-align: center;
+  padding: 2rem;
+}
+
+#TaskList .Task #Card {
+  height: 100%;
+}
+
+#TaskList .Task a {
+  text-decoration: none;
+}
+
+#TaskList .Task .Icon {
+  color: #3366cc;
+  font-size: 8rem;
+}
+
+#TaskList .Task p {
+  font-size: 2rem;
+}
+
+#TaskList #Login {
+  text-transform: none;
+}
+
+#LoginPage {
+  align-items: center;
+  background-color: #336699;
+}
+
+#LoginPage #Dialog {
+  display: block;
+}
+
+#LoginPage #Progress {
+  width: 2rem;
+  height: 2rem;
+}
+
+.TaskPage.MuiGrid-container {
+  display: block;
+}
+
+.TaskPage #Score thead {
+  background-color: #6699cc;
+}
+
+.TaskPage #Upload {
+  margin-left: 1rem;
+}
+
+#FBP.TaskPage {
+  background-color: #99cc99;
+  margin: 0;
+  /* display: block; */
+}
+
+#SBP.TaskPage {
+  background-color: #cc9999;
+  margin: 0;
+  /* display: block; */
+}
+
+#PageTitle {
+  font-size: 4rem;
+  font-weight: 100;
+  margin-top: 1rem;
+}
+
