@@ -74,6 +74,10 @@
   margin-left: 1rem;
 }
 
+.TooltipBright {
+  color: yellow;
+}
+
 #FBP.TaskPage {
   background-color: #99cc99;
   margin: 0;

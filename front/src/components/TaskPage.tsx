@@ -2,9 +2,17 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Paper, Typography, Grid, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Fab, Icon, Tooltip } from '@material-ui/core';
+import { Paper, Typography, Grid, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Fab, Icon, Tooltip, makeStyles } from '@material-ui/core';
 import { AppContext } from '../AppContext';
 
+
+
+const useStyles = makeStyles({
+    tooltip: {
+      fontSize: "1em",
+      backgroundColor: "#336699",
+    },
+});
 
 interface TaskProps {
     task: string
@@ -13,14 +21,20 @@ interface TaskProps {
 export function TaskPage(props: TaskProps) : JSX.Element {
     const context = useContext(AppContext);
     const history = useHistory();
+    const styles = useStyles();
 
 
     const task = context.store.get_task(props.task);
 
     let floatingButton;
     if (context.store.user.loggedIn){
+        const text = (
+            <span>Upload your submit.<br/><br/>
+            You are logged in as <span className="TooltipBright"><b>{context.store.user.name}</b></span> from
+            team <span className="TooltipBright"><b>{context.store.user.team}</b></span></span>
+        );
         floatingButton = (
-            <Tooltip title={"You are logged in as " + context.store.user.name + " from team " + context.store.user.team} >
+            <Tooltip arrow title={text} classes={{tooltip: styles.tooltip}} placement="bottom-start">
             <Fab id="Upload" color="secondary">
                 <Icon>upload</Icon>
             </Fab>
@@ -29,7 +43,7 @@ export function TaskPage(props: TaskProps) : JSX.Element {
     }
     else {
         floatingButton = (
-            <Tooltip title="Log in to upload">
+            <Tooltip arrow title="Log in to upload" classes={{tooltip: styles.tooltip}}>
             <Fab id="Upload" color="secondary" onClick={() => history.push("/login")}>
                 <Icon>person_outline</Icon>
             </Fab>

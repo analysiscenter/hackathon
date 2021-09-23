@@ -64,7 +64,7 @@ export class ScoreStore {
 
                 this.setUser({ name: name, isLogging: false, loggedIn: true, cancelLogging: false});
             }
-        }, 4000);
+        }, 1000);
     }
 
     cancelLogin() : void {
