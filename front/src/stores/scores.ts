@@ -1,20 +1,22 @@
 import { makeAutoObservable, toJS } from "mobx"
-import { string } from "prop-types";
 import Cookies from "universal-cookie";
+
 
 import mockData from "./mock-data";
 
+
 class User {
     name = undefined as string;
-    isLogging = false;
+    isWaiting = false;
     loggedIn = false;
     cancelLogging = false;
-    team = "Frgthy sd";
+    team_id = "T1";
+    teamName = "Team 1"
 }
 
-class Team {
+class TeamScore {
     id: string;
-    name : string;
+    name: string;
     score: number;
     numOfSubmits: number;
 }
@@ -23,8 +25,17 @@ class Task {
     name : string;
     link : string;
     icon : string;
-    teams: Team[];
+    teams: TeamScore[];
 }
+
+class Submit {
+    userName: string;
+    task_id: string;
+    score: number;
+    time: Date;
+}
+
+type SubmitLog = Submit[];
 
 
 export class ScoreStore {
@@ -46,15 +57,24 @@ export class ScoreStore {
         return this.user.loggedIn;
     }
 
+    register(fields: Partial<User>) : void {
+        const a = fields;
+        this.setUser({ isWaiting: true});
+        // send to the server
+        setTimeout(() => {
+            this.setUser({ isWaiting: false});
+        }, 2000);
+    }
+
     setUser(fields: Partial<User>) : void {
         Object.assign(this.user, fields);
     }
 
     login(name: string, password: string) : void {
-        this.setUser( { isLogging: true });
+        this.setUser( { isWaiting: true });
         setTimeout(() => {
             if (this.user.cancelLogging){
-                this.setUser({ isLogging: false, loggedIn: false, cancelLogging: false});
+                this.setUser({ isWaiting: false, loggedIn: false, cancelLogging: false});
             }
             else {
                 this.cookies.set("login", name, { path: "/ "});
@@ -62,17 +82,17 @@ export class ScoreStore {
                 date.setDate(date.getDate() + 30)
                 this.cookies.set("password", password, { path: "/ ", expires: date});
 
-                this.setUser({ name: name, isLogging: false, loggedIn: true, cancelLogging: false});
+                this.setUser({ name: name, isWaiting: false, loggedIn: true, cancelLogging: false});
             }
         }, 1000);
     }
 
     cancelLogin() : void {
-        this.setUser({ name: undefined, isLogging: false, loggedIn: false, cancelLogging: true});
+        this.setUser({ name: undefined, isWaiting: false, loggedIn: false, cancelLogging: true});
     }
 
     logout() : void {
-        this.setUser({ name: undefined, isLogging: false, loggedIn: false, cancelLogging: false});
+        this.setUser({ name: undefined, isWaiting: false, loggedIn: false, cancelLogging: false});
         setTimeout(() => {
             this.cookies.remove("login", { path: "/ "});
             this.cookies.remove("password", { path: "/ " });
@@ -81,5 +101,13 @@ export class ScoreStore {
 
     get_task(id: string) : Task {
         return this.tasks[id];
+    }
+
+    submit(file: File) : void {
+        this.setUser({ isWaiting: true});
+        // send to the server
+        setTimeout(() => {
+            this.setUser({ isWaiting: false});
+        }, 5000);
     }
 }

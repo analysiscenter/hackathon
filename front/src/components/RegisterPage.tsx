@@ -1,40 +1,33 @@
 import * as React from 'react';
-import { autorun } from "mobx";
 import { observer } from 'mobx-react';
 
-import { Button,  TextField, Grid, Paper, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@material-ui/core';
+import { Button,  TextField, Grid, Paper, DialogActions, DialogContent, DialogTitle, CircularProgress, Divider } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { AppContext } from '../AppContext';
 
 
-
-export const LoginPage = observer(
-    class LoginPage extends React.Component<RouteComponentProps> {
+export const RegisterPage = observer(
+    class RegisterPage extends React.Component<RouteComponentProps> {
 
         static contextType = AppContext;
 
         initState = () => {
-            autorun(() => {
-                if (this.context.store.user.loggedIn)
-                    this.props.history.goBack();
-            })
-
             return {
-                username: this.context.store.user.name || "",
+                name: "",
                 password: "",
+                teamName: "",
             }
         }
 
         state = this.initState()
 
         handleClose = () => {
-            this.context.store.cancelLogin()
             this.props.history.goBack();
         }
 
         handleLogin = (event: React.FormEvent) => {
-            this.context.store.login(this.state.username, this.state.password);
+            this.context.store.register(this.state);
 
             // By default, submitting a form refreshes the page
             event.preventDefault()
@@ -44,22 +37,30 @@ export const LoginPage = observer(
         render() {
             let button;
             if (this.context.store.user.isWaiting)
-                button = <Button color="primary"><CircularProgress id="Submitting" size="1rem"/>&nbsp;Signing in</Button>;
+                button = <Button color="primary"><CircularProgress id="Progress" size="1rem" />&nbsp;Registering...</Button>;
             else
-                button = <Button type="submit" color="primary">Sign in</Button>;
+                button = <Button type="submit" color="primary">Register</Button>;
 
             return (
             <Grid container id="LoginPage" spacing={2} justifyContent="center">
             <Grid container item id="Dialog" direction="row" justifyContent="center" xs={8} md={6} lg={4}>
             <Paper elevation={1}>
             <form id="login" onSubmit={this.handleLogin}>
-                <DialogTitle>Sign in</DialogTitle>
+                <DialogTitle>Register a new team</DialogTitle>
 
                 <DialogContent>
-                <TextField required fullWidth autoFocus margin="dense" id="username" label="Username" type="text" variant="outlined"
-                    value={this.state.username} onChange={e => this.setState({ username : e.target.value })} />
-                <TextField required fullWidth margin="dense" id="password" label="Password" type="password" variant="outlined"
+                <TextField fullWidth required margin="dense" id="email" label="e-mail" type="email" variant="outlined"
+                    helperText="will be used as username for submits"
+                    value={this.state.name} onChange={e => this.setState({ name : e.target.value })} />
+                <TextField fullWidth required margin="dense" id="password" label="Password" type="password" variant="outlined"
                     value={this.state.password} onChange={e => this.setState({ password : e.target.value })} />
+
+                <Divider style={{marginTop: '1rem', marginBottom: '1rem'}}/>
+
+                <TextField fullWidth required margin="dense" id="teamName" label="Team name" variant="outlined"
+                    helperText="max length is 40, so use sensibly"
+                    inputProps={{ maxLength: 40 }} value={this.state.teamName} onChange={e => this.setState({ teamName : e.target.value })} />
+
                 </DialogContent>
 
                 <DialogActions>

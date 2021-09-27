@@ -46,6 +46,12 @@
 
 #TaskList #Login {
   text-transform: none;
+  margin-left: 1rem;
+}
+
+#TaskList #Register {
+  text-transform: none;
+  margin-left: 1rem;
 }
 
 #LoginPage {
@@ -72,6 +78,10 @@
 
 .TaskPage #Upload {
   margin-left: 1rem;
+}
+
+.TaskPage #Uploading {
+  color: white;
 }
 
 .TooltipBright {

@@ -12,6 +12,7 @@ import "@fontsource/material-icons";
 import { ChooseTask } from './components/ChooseTask';
 import { TaskPage } from './components/TaskPage';
 import { LoginPage } from './components/LoginPage';
+import { RegisterPage } from './components/RegisterPage';
 import { AppContext, AppContextProvider } from './AppContext';
 
 
@@ -39,6 +40,7 @@ class App extends React.Component {
             <TaskRoutes />
 
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
             {/* <Route exact path="/profile" component={Profile} /> */}
         </MemoryRouter>
         </AppContextProvider>

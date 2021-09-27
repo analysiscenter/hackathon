@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Paper, Icon, Typography, Grid, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { AppContext, AppContextType } from '../AppContext';
+import { AppContext } from '../AppContext';
 
 
 interface TaskIconProps {
@@ -33,6 +33,7 @@ export function ChooseTask() : JSX.Element {
     const loggedIn = <Typography>You are logged in as {context.store.user.name}</Typography>;
     const login = context.store.user.loggedIn ? loggedIn : loginButton;
 
+
     return (
         <Grid container id="TaskList" spacing={2}>
             <Grid container item justifyContent="center" xs={12}>
@@ -48,8 +49,9 @@ export function ChooseTask() : JSX.Element {
                 )}
             </Grid>
 
-            <Grid container item justifyContent="center" xs={12}>
+            <Grid container item id="Buttons" justifyContent="center" xs={12}>
                 {login}
+                <Button id="Register" variant="contained" component={Link} to="/register">Register a new team</Button>
             </Grid>
 
         </Grid>
